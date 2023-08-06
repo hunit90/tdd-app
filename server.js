@@ -15,6 +15,7 @@ mongoose.connect(`mongodb+srv://${username}:${password}@cluster0.9nrsdmt.mongodb
     }).then(() => console.log('MongoDb Connected...'))
     .catch(err => console.log(err));
 
+app.use(express.json());
 app.use('/api/products', productRoutes);
 app.get('/', (req, res) => {
   res.send('Hello World')

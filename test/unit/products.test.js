@@ -31,9 +31,9 @@ describe("Product Controller Create", () => {
     expect(res._isEndCalled()).toBeTruthy();
   })
 
-  test('should return json body in response', () => {
+  test('should return json body in response', async () => {
     productModel.create.mockReturnValue(newProduct)
-    productController.createProduct(req, res, next)
+    await productController.createProduct(req, res, next)
     expect(res._getJSONData()).toStrictEqual(newProduct)
   })
 })
