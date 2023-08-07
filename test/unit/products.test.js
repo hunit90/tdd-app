@@ -28,7 +28,7 @@ describe("Product Controller Create", () => {
   test('should return 201 response code', () => {
     productController.createProduct(req, res, next);
     expect(res.statusCode).toBe(200);
-    expect(res._isEndCalled()).toBeTruthy();
+    expect(res._isEndCalled).toBeTruthy();
   })
 
   test('should return json body in response', async () => {
