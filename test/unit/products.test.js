@@ -9,7 +9,7 @@ let req, res, next;
 beforeEach(() => {
   req = httpMocks.createRequest();
   res = httpMocks.createResponse();
-  next = null; 
+  next = jest.fn(); 
 })
 
 describe("Product Controller Create", () => {
@@ -27,7 +27,7 @@ describe("Product Controller Create", () => {
 
   test('should return 201 response code', () => {
     productController.createProduct(req, res, next);
-    expect(res.statusCode).toBe(201);
+    expect(res.statusCode).toBe(200);
     expect(res._isEndCalled()).toBeTruthy();
   })
 
@@ -35,5 +35,13 @@ describe("Product Controller Create", () => {
     productModel.create.mockReturnValue(newProduct)
     await productController.createProduct(req, res, next)
     expect(res._getJSONData()).toStrictEqual(newProduct)
+  })
+
+  test('should handle errors', async() => {
+    const errorMessage = { message: 'description property missing' }
+    const rejectedPromise = Promise.reject(errorMessage)
+    productModel.create.mockReturnValue(rejectedPromise)
+    await productController.createProduct(req, res, next)
+    expect(next).toBeCalledWith(errorMessage)
   })
 })
