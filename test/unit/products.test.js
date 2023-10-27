@@ -23,6 +23,12 @@ describe('Product Controller Create', () => {
 
     it('should call ProductModel.create', () => {
         productController.createProduct(req, res, next);
-        expect(productModel.create).toBeCalledWith();
+        expect(productModel.create).toBeCalledWith(newProduct);
+    });
+
+    it('should return 201 response code', () => {
+        productController.createProduct(req, res, next);
+        expect(res.statusCode).toBe(201);
+        expect(res._isEndCalled()).toBeTruthy();
     });
 });
